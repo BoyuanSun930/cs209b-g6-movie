@@ -128,7 +128,7 @@ def plot_learning_curve(results, ax):
     ax.set_ylabel('Accuracy')
     ax.legend(loc='best')
 
-def genre_acc(y_true, y_pred, title, is_neural_net = False, thres = 0.5, genre_dict = genre_dict):
+def genre_acc(y_true, y_pred, genre_dict, title, is_neural_net = False, thres = 0.5):
     """ Function to calculate and visualize the accuracy by genre.
         IMPORTANT NOTE: the predictions of neural network is prob, differet from sklearn classifiers,
         need to specify the classifier type
