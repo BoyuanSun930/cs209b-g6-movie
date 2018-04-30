@@ -156,6 +156,6 @@ def genre_acc(y_true, y_pred, genre_dict, title, is_neural_net = False, thres = 
     plt.figure(figsize=(15,8))
     plt.bar(np.arange(20), probas, 0.5, alpha = 0.5, edgecolor = 'gold')
     plt.xticks(np.arange(20), list(genre_dict.keys()), rotation = 90, fontsize = 32)
-    plt.ylabel('True Positive Accuracy', fontsize = 32)
+    plt.ylabel('True Positive Rate', fontsize = 32)
     plt.title(title, fontsize = 32)
     plt.show()
