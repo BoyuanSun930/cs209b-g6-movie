@@ -1,6 +1,7 @@
 import numpy as np
 from sklearn import metrics
 import pandas as pd
+import matplotlib.pyplot as plt
 
 def score_thres(y_true, y_pred_probas, threshold = 0.5, method='avg'):
     """ Function to evaluate the model with various metrics with a threshold value
