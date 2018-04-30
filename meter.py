@@ -158,3 +158,4 @@ def genre_acc(y_true, y_pred, genre_dict, title, is_neural_net = False, thres = 
     plt.xticks(np.arange(20), list(genre_dict.keys()), rotation = 90, fontsize = 15)
     plt.ylabel('True Positive Accuracy', fontsize = 15)
     plt.title(title, fontsize = 15)
+    plt.show()
