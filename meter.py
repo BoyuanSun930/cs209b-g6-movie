@@ -127,3 +127,33 @@ def plot_learning_curve(results, ax):
     ax.set_xlabel('Epochs')
     ax.set_ylabel('Accuracy')
     ax.legend(loc='best')
+
+def genre_acc(y_true, y_pred, title, is_neural_net = False, thres = 0.5, genre_dict = genre_dict):
+    """ Function to calculate and visualize the accuracy by genre.
+        IMPORTANT NOTE: the predictions of neural network is prob, differet from sklearn classifiers,
+        need to specify the classifier type
+        INPUTS
+        ------
+        y_true : true labels
+        y_pred : predicted label
+        title : title of the plot
+        genre_dict : index dictionary
+        thres : threshold value for 1 if predicted by neural network
+        
+        OUTPUTS
+        -------
+        plot the by genre acc given the true labels and predicted label
+        """
+    
+    if is_neural_net:
+        y_pred = np.where(y_pred > thres, 1, 0)
+    y_correct = ((y_true + y_pred) == 2).sum(0)
+    y_total = (y_true == 1).sum(0)
+    for index, key in enumerate(list(genre_dict.keys())[:20]):
+        print('Genre {}: {} correct out of {}'.format(key, y_correct[index], y_total[index]))
+    probas = y_correct / y_total
+    plt.figure(figsize=(15,8))
+    plt.bar(np.arange(20), probas, 0.5, alpha = 0.5, edgecolor = 'gold')
+    plt.xticks(np.arange(20), list(genre_dict.keys()), rotation = 90, fontsize = 15)
+    plt.ylabel('True Positive Accuracy', fontsize = 15)
+    plt.title(title, fontsize = 15)
