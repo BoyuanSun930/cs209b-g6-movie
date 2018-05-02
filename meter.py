@@ -2,6 +2,9 @@ import numpy as np
 from sklearn import metrics
 import pandas as pd
 import matplotlib.pyplot as plt
+from sklearn.metrics import precision_recall_curve
+from sklearn.metrics import average_precision_score
+import seaborn as sns
 
 def score_thres(y_true, y_pred_probas, threshold = 0.5, method='avg'):
     """ Function to evaluate the model with various metrics with a threshold value
@@ -159,3 +162,35 @@ def genre_acc(y_true, y_pred, genre_dict, title, is_neural_net = False, thres = 
     plt.ylabel('True Positive Rate', fontsize = 32)
     plt.title(title, fontsize = 32)
     plt.show()
+
+def plot_precision_recall(y_test, y_pred, genre_dict):
+    """ plot the precision recall curve
+        INPUTS
+        ------
+        y_test : true labels
+        y_pred : predicted probability
+        
+        OUTPUTS
+        -------
+        precision-recall curve for each genre
+        """
+    sns.set_palette("Set1", n_colors=10)
+    sns.set_style('darkgrid')
+    fig, ax = plt.subplots(1, 2, figsize = (16, 8))
+    genres_names = list(genre_dict.keys())[:20]
+    for i in range(10):
+        precision_stack, recall_stack,_ = precision_recall_curve(y_test[:, i], y_pred[:, i])
+        avg_pre = average_precision_score(y_test[:, i], y_pred[:, i])
+        ax[0].plot(precision_stack, recall_stack, label = genres_names[i] + ' = ' + str(avg_pre)[:4])
+    ax[0].legend();
+    ax[0].set_xlabel('Recall')
+    ax[0].set_ylabel('Precision')
+    ax[0].set_title('Precision-recall Curve for First 10 Genres')
+    for i in range(10):
+        precision_stack, recall_stack,_ = precision_recall_curve(y_test[:, 10 + i], y_pred[:, 10 + i])
+        avg_pre = average_precision_score(y_test[:, 10 + i], y_pred[:, 10 + i])
+        ax[1].plot(precision_stack, recall_stack, label = genres_names[10 + i] + ' = ' + str(avg_pre)[:4])
+    ax[1].legend();
+    ax[1].set_xlabel('Recall')
+    ax[1].set_ylabel('Precision')
+    ax[1].set_title('Precision-recall Curve for Last 10 Genres')
